@@ -8,9 +8,9 @@ let app = express();
 
 app.use(express.static(publicPath));
 
-app.use(()=>{
-  res.render('index.html');
-})
+// app.use(()=>{
+//   res.render('index.html');
+// })
 
 
 app.listen(port,()=>{
