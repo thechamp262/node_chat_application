@@ -19,13 +19,18 @@ io.on('connection',(socket)=>{
     console.log("The user has disconnected!");
   })
   //new message whofrom text createdattime stamp
-  socket.emit("newMessage",{
-    from: "test@email.com",
-    message: "This is some dummy text",
-    createdAT: 123321
-  });
+  // socket.emit("newMessage",{
+  //   from: "test@email.com",
+  //   message: "This is some dummy text",
+  //   createdAT: 123321
+  // });
   socket.on("createMessage",(newMessage)=>{
     console.log(`New Message from ${newMessage.from}.`, newMessage);
+    io.emit("newMessage",{
+      from: newMessage.from,
+      text:newMessage.text,
+      createdAt: new Date().getTime()
+    });
   })
 
 });
