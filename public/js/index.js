@@ -13,9 +13,9 @@
     });
 
     socket.on("newMessage",function(newMessage){
-      console.log("Incoming message",newMessage);
+      let formattedTime = moment(newMessage.createAt).format('h:mm a');
       let li = jQuery('<li></il>');
-      li.text(`${newMessage.from}: ${newMessage.text}`);
+      li.text(`${newMessage.from} ${formattedTime}: ${newMessage.text}`);
 
       jQuery('#messages').append(li);
     });
@@ -38,8 +38,9 @@
     socket.on('newLocationMessage',function(m){//m is for message
       let li = jQuery('<li></li>');
       let a = jQuery('<a target="_blank">My current location</a>');
+      let formattedTime = moment(m.createdAt).format('h:mm a');
 
-      li.text(`${m.from}: `);
+      li.text(`${m.from} ${formattedTime}: `);
       a.attr('href',m.url);
       li.append(a);
       jQuery('#messages').append(li);
