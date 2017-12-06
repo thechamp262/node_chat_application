@@ -14,10 +14,13 @@
 
     socket.on("newMessage",function(newMessage){
       let formattedTime = moment(newMessage.createAt).format('h:mm a');
-      let li = jQuery('<li></il>');
-      li.text(`${newMessage.from} ${formattedTime}: ${newMessage.text}`);
-
-      jQuery('#messages').append(li);
+      let template = jQuery('#message-template').html();
+      let html = Mustache.render(template,{
+        text: newMessage.text,
+        from: newMessage.from,
+        createdAt: formattedTime
+      });
+      jQuery('#messages').append(html);
     });
 
     jQuery('#message-form').on('submit',function(e){
@@ -36,14 +39,14 @@
     let locationButton = jQuery('#send-location');
 
     socket.on('newLocationMessage',function(m){//m is for message
-      let li = jQuery('<li></li>');
-      let a = jQuery('<a target="_blank">My current location</a>');
       let formattedTime = moment(m.createdAt).format('h:mm a');
-
-      li.text(`${m.from} ${formattedTime}: `);
-      a.attr('href',m.url);
-      li.append(a);
-      jQuery('#messages').append(li);
+      let template = jQuery('#location-message-template').html();
+      let html = Mustache.render(template,{
+        url: m.url,
+        from: m.from,
+        createdAt: formattedTime
+      });
+      jQuery('#messages').append(html);
     });
 
 
