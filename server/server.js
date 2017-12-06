@@ -21,7 +21,7 @@ io.on('connection',(socket)=>{
 
   socket.broadcast.emit("newMessage",generateMessage('Admin','A new user has joined!'));
 
-  socket.on("createMessage",(newMessage)=>{
+  socket.on("createMessage",(newMessage,callback)=>{
     console.log(`New Message from ${newMessage.from}.`, newMessage);
 
     // socket.broadcast.emit("newMessage",{
@@ -30,6 +30,7 @@ io.on('connection',(socket)=>{
     //   date: new Date().getTime()
     // });
     io.emit("newMessage",generateMessage(newMessage.from,newMessage.text));
+    callback("This is from the server!!!");
   })
 
   socket.on("disconnect",()=>{
